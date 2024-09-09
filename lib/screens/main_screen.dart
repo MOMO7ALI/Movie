@@ -4,7 +4,7 @@ import 'package:movies_app/screens/tabs/home_tab/home.dart';
 import 'package:movies_app/screens/tabs/search_tap/search.dart';
 import 'package:movies_app/screens/tabs/watchlist_tap/watchlist.dart';
 
-import '../app_theme.dart';
+import '../themeing/app_theme.dart';
 
 class MainScreen extends StatefulWidget {
    MainScreen({super.key});
