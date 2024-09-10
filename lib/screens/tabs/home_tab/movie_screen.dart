@@ -190,8 +190,17 @@ textAlign: TextAlign.center,
                                         itemBuilder: (context, index) {
                                           return Padding(
                                             padding: const EdgeInsets.only(left: 5,right: 5,bottom: 5),
-                                            child: MovieItem(
-                                              movie: response![index],
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(context, MovieName.routeName,
+                                                    arguments: MovieData(
+                                                      id: response![index].id.toString(),
+                                                    ));
+
+                                              },
+                                              child: MovieItem(
+                                                movie: response![index],
+                                              ),
                                             ),
                                           );
                                         },

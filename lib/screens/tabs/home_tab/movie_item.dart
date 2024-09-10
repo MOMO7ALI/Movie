@@ -22,25 +22,14 @@ class _MovieItemState extends State<MovieItem> {
     return Stack(children: [
       ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: InkWell(
-          onTap: () {
-            addMovie();
-            if (isBookmarked) {
-              isBookmarked = false;
-            } else {
-              isBookmarked = true;
-            }
-            setState(() {});
-          },
-          child: CachedNetworkImage(
-            imageUrl: FixImage.fixImage(widget.movie.posterPath ?? 'No Image'),
-            errorWidget: (context, url, error) => const Center(
-                child: Icon(
-              Icons.error,
-              size: 50,
-            )),
-            // Changed to BoxFit.cover for aspect ratio
-          ),
+        child: CachedNetworkImage(
+          imageUrl: FixImage.fixImage(widget.movie.posterPath ?? 'No Image'),
+          errorWidget: (context, url, error) => const Center(
+              child: Icon(
+            Icons.error,
+            size: 50,
+          )),
+          // Changed to BoxFit.cover for aspect ratio
         ),
       ),
       isBookmarked
@@ -54,19 +43,30 @@ class _MovieItemState extends State<MovieItem> {
               size: 30,
               color: AppTheme.lightGrey,
             ),
-      Padding(
-        padding: const EdgeInsets.all(7),
-        child: isBookmarked
-            ? const Icon(
-                Icons.check,
-                size: 15,
-                color: Colors.white,
-              )
-            : const Icon(
-                Icons.add,
-                size: 15,
-                color: Colors.white,
-              ),
+      InkWell(
+        onTap: () {
+          addMovie();
+          if (isBookmarked) {
+            isBookmarked = false;
+          } else {
+            isBookmarked = true;
+          }
+          setState(() {});
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(7),
+          child: isBookmarked
+              ? const Icon(
+                  Icons.check,
+                  size: 15,
+                  color: Colors.white,
+                )
+              : const Icon(
+                  Icons.add,
+                  size: 15,
+                  color: Colors.white,
+                ),
+        ),
       ),
     ]);
   }

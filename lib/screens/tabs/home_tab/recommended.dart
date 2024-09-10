@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/screens/tabs/home_tab/movie_screen.dart';
 import '../../../apis/api_manager.dart';
 import '../../../model/top_rated_movies_response.dart';
 import '../../../themeing/app_theme.dart';
+import 'movie_carousel_item.dart';
 import 'movie_item.dart';
 
 class Recomended extends StatelessWidget {
@@ -37,8 +39,18 @@ class Recomended extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: MovieItem(
-                          movie: results![index],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, MovieName.routeName,
+                                arguments: MovieData(
+                                  id: results![index].id.toString(),
+                                ));
+
+                          },
+
+                          child: MovieItem(
+                            movie: results![index],
+                          ),
                         ),
                       );
                     },
