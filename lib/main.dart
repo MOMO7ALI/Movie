@@ -10,7 +10,7 @@ import 'screens/tabs/watchlist_tap/movie.dart';
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(MovieAdapter());
+  // Hive.registerAdapter(MovieAdapter());
   await Hive.openBox<Movie>('movies');
 
   runApp(MyApp());

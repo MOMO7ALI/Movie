@@ -26,11 +26,13 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( resizeToAvoidBottomInset: false,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: Theme(
         data: AppTheme.appTheme.copyWith(canvasColor: AppTheme.lightBlack),
         child: BottomNavigationBar(
           showUnselectedLabels: true,
+
           selectedFontSize: 13,
           unselectedFontSize: 11,
           items: const [
