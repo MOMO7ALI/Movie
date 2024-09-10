@@ -1,0 +1,168 @@
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import '../../../model/popular_movies_response.dart';
+import '../../../themeing/app_theme.dart';
+import '../watchlist_tap/movies.dart';
+import 'image.dart';
+import 'movie_screen.dart';
+
+class MovieICarouselItemWidget extends StatefulWidget {
+  final Result result;
+
+  MovieICarouselItemWidget({required this.result});
+
+  @override
+  State<MovieICarouselItemWidget> createState() =>
+      _MovieICarouselItemWidgetState();
+}
+
+class _MovieICarouselItemWidgetState extends State<MovieICarouselItemWidget> {
+  bool isBookmarked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: double.infinity,
+              child: Image.network(
+                  FixImage.fixImage(widget.result.backdropPath ?? ''),
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.fitHeight),
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.128,
+                  left: MediaQuery.of(context).size.width * 0.052),
+              child: Image.network(
+                  FixImage.fixImage(widget.result.posterPath ?? '')),
+              height: MediaQuery.of(context).size.height * 0.4,
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.03),
+              height: MediaQuery.of(context).size.height * 0.294,
+              child: isBookmarked
+                  ? Icon(
+                      Icons.bookmark_sharp,
+                      size: 40,
+                      color: AppTheme.lightGold,
+                    )
+                  : Icon(
+                      Icons.bookmark_sharp,
+                      size: 40,
+                      color: AppTheme.lightGrey,
+                    ),
+            ),
+            InkWell(
+              onTap: () {
+                addMovie();
+                if (isBookmarked) {
+                  isBookmarked = false;
+                } else {
+                  isBookmarked = true;
+                }
+                setState(() {});
+              },
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.062),
+                height: MediaQuery.of(context).size.height * 0.295,
+                child: isBookmarked
+                    ? const Icon(
+                        Icons.check,
+                        size: 15,
+                        color: Colors.white,
+                      )
+                    : const Icon(
+                        Icons.add,
+                        size: 15,
+                        color: Colors.white,
+                      ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.32,
+                  left: MediaQuery.of(context).size.width * 0.45),
+              child: Text(
+                widget.result.title ?? '',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.365,
+                  left: MediaQuery.of(context).size.width * 0.45),
+              child: Row(
+                children: [
+                  Text(
+                    widget.result.releaseDate ?? '',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  Text(
+                    widget.result.adult! ? '  PG 18' : '  PG 13',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  Text(
+                    '',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.1,
+                  left: MediaQuery.of(context).size.width * 0.5),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, MovieName.routeName,
+                      arguments: MovieData(
+                        id: widget.result.id.toString(),
+                      ));
+                },
+                child: const Icon(
+                  Icons.play_circle,
+                  size: 50,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+  void addMovie() async {
+    final movieBox = Hive.box<Movie>('watchlist');
+
+    Movie movie = Movie(
+      id: widget.result.id.toString(), // Ensure this field exists in Movie
+      title: widget.result.title ?? '', // Ensure this field exists in Movie
+      posterUrl: widget.result.posterPath ?? '', // Assuming you want to use posterPath here
+      releaseDate: widget.result.releaseDate ?? '', // Ensure this field exists in Movie
+    );
+
+    movieBox.add(movie); // Add movie to Hive box
+    print('${widget.result.id} added to watchlist');
+  }
+
+
+
+
+
+
+}
+
+class MovieData {
+  String? id;
+
+  MovieData({
+    required this.id,
+  });
+}
