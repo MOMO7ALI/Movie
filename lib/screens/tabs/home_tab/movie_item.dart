@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:movies_app/model/by_id_movies_response.dart';
 import '../../../themeing/app_theme.dart';
 import '../watchlist_tap/MovieAdapter.dart';
+import '../watchlist_tap/hiveUtils.dart';
 import '../watchlist_tap/movie.dart';
 import 'image.dart';
 
@@ -46,11 +48,11 @@ class _MovieItemState extends State<MovieItem> {
             ),
       InkWell(
         onTap: () {
-          addMovie();
           if (isBookmarked) {
             isBookmarked = false;
           } else {
             isBookmarked = true;
+            Hiveutils.saveMovies(MoviesById());
           }
           setState(() {});
         },
@@ -71,55 +73,12 @@ class _MovieItemState extends State<MovieItem> {
       ),
     ]);
   }
-  void addMovie() async {
-    final movieBox = Hive.box<Movie>('movies');
-
-    // Create a movie instance from the widget data
-    Movie movie = Movie(
-      id: widget.movie.id,
-      title: widget.movie.title,
-      posterUrl: widget.movie.posterUrl,
-      releaseDate: widget.movie.releaseDate,
-    );
-
-    try {
-      // Check if the movie already exists in the watchlist
-      bool movieExists = movieBox.values.any((existingMovie) => existingMovie.id == movie.id);
-
-      if (movieExists) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${movie.title} is already in your watchlist.'),
-          ),
-        );
-        return;
-      }
-
-      // Add the movie to Hive box
-      await movieBox.add(movie);
-
-      // Provide feedback to the user
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${movie.title} added to watchlist.'),
-        ),
-      );
-
-      print('${movie.id} added to watchlist');
-
-      // Optionally update the bookmark status if needed
-      setState(() {
-        isBookmarked = true;
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to add movie to watchlist: $e'),
-        ),
-      );
-      print('Error adding movie to watchlist: $e');
-    }
-  }
+// void addMovie(){
+//     Movie movie=Movie(id: Widget.movie.id.toString());
+//     Hiveutils.saveMovies(movie.id!)
+//
+//
+// }
 
 
 

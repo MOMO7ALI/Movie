@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-// part 'movie.g.dart'; // Ensure this is correctly linked
+ part 'movie.g.dart'; // Ensure this is correctly linked
 
 @HiveType(typeId: 0) // Ensure this typeId is unique
 class Movie {
