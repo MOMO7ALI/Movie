@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '../../../model/popular_movies_response.dart';
 import '../../../themeing/app_theme.dart';
-import '../watchlist_tap/movies.dart';
+import '../watchlist_tap/MovieAdapter.dart';
+import '../watchlist_tap/movie.dart';
 import 'image.dart';
 import 'movie_screen.dart';
 

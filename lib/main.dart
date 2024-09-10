@@ -11,7 +11,7 @@ void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(MovieAdapter());
-  await Hive.openBox<Movie>('watchlist');
+  await Hive.openBox<Movie>('movies');
 
   runApp(MyApp());
 }
