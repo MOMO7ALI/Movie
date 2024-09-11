@@ -8,6 +8,7 @@ import 'Movie.dart';
 import 'Movie_Widget.dart';
 
 class WatchListScreen extends StatefulWidget {
+
   @override
   State<WatchListScreen> createState() => _WatchListScreenState();
 }

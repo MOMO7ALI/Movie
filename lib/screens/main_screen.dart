@@ -34,6 +34,9 @@ class _MainScreenState extends State<MainScreen> {
           showUnselectedLabels: true,
 
           selectedFontSize: 13,
+          elevation: 1,
+
+          type: BottomNavigationBarType.shifting,
           unselectedFontSize: 11,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

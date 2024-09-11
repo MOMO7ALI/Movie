@@ -38,7 +38,8 @@ class MovieName extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          InkWell(onTap: () {
+                          InkWell(
+                            onTap: () {
                             Navigator.pop(context);
                           },
                             child: Icon(
@@ -51,7 +52,7 @@ class MovieName extends StatelessWidget {
                             child: Text(
                               result!.title!,
                               style: Theme.of(context).textTheme.titleLarge,
-textAlign: TextAlign.center,
+                              textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
