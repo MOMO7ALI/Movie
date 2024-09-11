@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/screens/tabs/browse_tap/browse.dart';
 import 'package:movies_app/screens/tabs/home_tab/home.dart';
 import 'package:movies_app/screens/tabs/search_tap/search.dart';
-import 'package:movies_app/screens/tabs/watchlist_tap/watchlist.dart';
+import 'package:movies_app/screens/tabs/watchlist_tap/watch_list.dart';
 
 import '../themeing/app_theme.dart';
 

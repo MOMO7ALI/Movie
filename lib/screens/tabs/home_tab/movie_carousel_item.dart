@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import '../../../model/popular_movies_response.dart';
 import '../../../themeing/app_theme.dart';
-import '../watchlist_tap/MovieAdapter.dart';
+import '../watchlist_tap/FirerBase_Utils.dart';
 import '../watchlist_tap/movie.dart';
 import 'image.dart';
 import 'movie_screen.dart';
@@ -139,25 +138,15 @@ class _MovieICarouselItemWidgetState extends State<MovieICarouselItemWidget> {
       ],
     );
   }
-  void addMovie() async {
-    final movieBox = Hive.box<Movie>('watchlist');
 
-    Movie movie = Movie(
-      id: widget.result.id.toString(), // Ensure this field exists in Movie
-      title: widget.result.title ?? '', // Ensure this field exists in Movie
-      posterUrl: widget.result.posterPath ?? '', // Assuming you want to use posterPath here
-      releaseDate: widget.result.releaseDate ?? '', // Ensure this field exists in Movie
-    );
-
-    movieBox.add(movie); // Add movie to Hive box
-    print('${widget.result.id} added to watchlist');
+  void addMovie() {
+    Movie movie = Movie(id: widget.result!.id.toString());
+    print('${widget.result!.id}');
+    FirebaseUtils.addMovieToFirebase(movie.id!)
+        .timeout(Duration(milliseconds: 500), onTimeout: () {
+      print('movie added to WatchList');
+    });
   }
-
-
-
-
-
-
 }
 
 class MovieData {
@@ -166,4 +155,12 @@ class MovieData {
   MovieData({
     required this.id,
   });
+
+
+
+
+
+
+
+
 }
