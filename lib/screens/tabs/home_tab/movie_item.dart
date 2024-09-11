@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:movies_app/model/by_id_movies_response.dart';
 import '../../../themeing/app_theme.dart';
-import '../watchlist_tap/MovieAdapter.dart';
-import '../watchlist_tap/hiveUtils.dart';
+import '../watchlist_tap/FirerBase_Utils.dart';
 import '../watchlist_tap/movie.dart';
 import 'image.dart';
 
@@ -48,11 +47,11 @@ class _MovieItemState extends State<MovieItem> {
             ),
       InkWell(
         onTap: () {
+          addMovie();
           if (isBookmarked) {
             isBookmarked = false;
           } else {
             isBookmarked = true;
-            Hiveutils.saveMovies(MoviesById());
           }
           setState(() {});
         },
@@ -73,12 +72,13 @@ class _MovieItemState extends State<MovieItem> {
       ),
     ]);
   }
-// void addMovie(){
-//     Movie movie=Movie(id: Widget.movie.id.toString());
-//     Hiveutils.saveMovies(movie.id!)
-//
-//
-// }
+  void addMovie() {
+    Movie movie = Movie(id: widget.movie!.id.toString());
+    FirebaseUtils.addMovieToFirebase(movie.id!)
+        .timeout(Duration(milliseconds: 500), onTimeout: () {
+      print('movie added to WatchList');
+    });
+  }
 
 
 
