@@ -6,11 +6,17 @@ import 'package:movies_app/themeing/app_theme.dart';
 import '../home_tab/movie_carousel_item.dart';
 import '../search_tap/movie_search_item.dart';
 
-class WatchListMovies extends StatelessWidget {
+class WatchListMovies extends StatefulWidget {
 String id;
 WatchListMovies({required this.id});
 
   @override
+  State<WatchListMovies> createState() => _WatchListMoviesState();
+}
+
+class _WatchListMoviesState extends State<WatchListMovies> {
+  @override
+
   Widget build(BuildContext context) {
     return
       FutureBuilder(builder:(context, snapshot) {
@@ -22,11 +28,13 @@ WatchListMovies({required this.id});
         var response=snapshot.data;
         return InkWell(
           onTap: () {
-            Navigator.pushNamed(context, MovieName.routeName,arguments: MovieData(id: id)
+
+            Navigator.pushNamed(context, MovieName.routeName,arguments: MovieData(id: widget.id)
             );
           },
+
             child: MovieSearchItem(movie: response!));
       }
-    },future: ApiManager.getMoviesById(id), );
+    },future: ApiManager.getMoviesById(widget.id), );
   }
 }
